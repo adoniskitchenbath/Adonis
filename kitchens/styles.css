@@ -524,6 +524,18 @@ select {
   text-align: center;
 }
 
+.process .eyebrow {
+  margin-bottom: 8px;
+}
+
+.process-intro {
+  width: min(100%, 640px);
+  margin: 0 auto 22px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
 .steps {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
