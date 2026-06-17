@@ -334,6 +334,20 @@ select {
   cursor: pointer;
 }
 
+.consult-card button:disabled {
+  cursor: wait;
+  opacity: 0.78;
+}
+
+.form-status {
+  min-height: 18px;
+  margin: 10px 0 0;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
 .consult-card small,
 .final-cta small {
   display: block;

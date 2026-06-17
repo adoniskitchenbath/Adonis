@@ -71,7 +71,7 @@
               <a href="tel:3307345727">&#9742; (330) 734-5727</a>
               <span>&#9906; Hudson, OH</span>
             </div>
-            <form id="consultation" class="consult-card" name="kitchen-consultation" action="/kitchens/thank-you/" method="post" data-netlify="true" data-netlify-honeypot="bot-field">
+            <form id="consultation" class="consult-card" name="kitchen-consultation" action="/kitchens/thank-you/" method="post" netlify data-netlify="true" data-netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="kitchen-consultation" />
               <input type="hidden" name="lead_source" value="landing.adoniskitchenbath.com" />
               <input type="hidden" name="landing_page" value="kitchens" />
@@ -86,6 +86,7 @@
               <label><span>Estimated Budget</span><select name="budget" required><option value="">Estimated Budget</option><option>$20k-$40k</option><option>$40k-$70k</option><option>$70k+</option><option>Not sure yet</option></select></label>
               <label><span>Project Details</span><textarea name="message" placeholder="Tell us about your project..."></textarea></label>
               <button type="submit">Get My Free Consultation</button>
+              <p class="form-status" role="status" aria-live="polite"></p>
               <small>&#128274; Your information is secure and never shared.</small>
             </form>
           </div>
@@ -204,6 +205,7 @@
           event.preventDefault();
 
           const submitButton = consultationForm.querySelector("button[type='submit']");
+          const statusMessage = consultationForm.querySelector(".form-status");
           const formData = new FormData(consultationForm);
 
           if (submitButton) {
@@ -211,16 +213,31 @@
             submitButton.textContent = "Submitting...";
           }
 
+          if (statusMessage) {
+            statusMessage.textContent = "";
+          }
+
           try {
-            await fetch("/", {
+            const response = await fetch("/kitchens/", {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },
               body: new URLSearchParams(formData).toString()
             });
 
+            if (!response.ok) {
+              throw new Error("Form submission failed");
+            }
+
             window.location.href = "https://www.adoniskitchenbath.com/schedule-a-free-estimate-thank-you/";
           } catch (error) {
-            consultationForm.submit();
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = "Get My Free Consultation";
+            }
+
+            if (statusMessage) {
+              statusMessage.textContent = "Sorry, something went wrong. Please call (330) 734-5727 or try again.";
+            }
           }
         });
       }
