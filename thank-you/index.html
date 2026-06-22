@@ -7,6 +7,15 @@
     <meta name="description" content="Thank you for requesting a remodeling consultation with Adonis Kitchen & Bath." />
     <link rel="canonical" href="https://landing.adoniskitchenbath.com/thank-you/" />
     <meta name="robots" content="noindex, follow" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-W4WF6HCX');
+    </script>
+    <!-- End Google Tag Manager -->
     <style>
       :root {
         color-scheme: light;
@@ -112,34 +121,51 @@
     </style>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4WF6HCX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <main>
       <img src="../kitchens/assets/client/adonis-logo.png" alt="Adonis Kitchen &amp; Bath" />
       <h1>Thank You</h1>
       <p>Your consultation request has been received. The Adonis Kitchen &amp; Bath team will review your project details and follow up soon.</p>
       <div class="actions">
         <a class="primary" href="tel:3307345727">Call (330) 734-5727</a>
-        <a id="back-link" href="/kitchens/">Back To Landing Page</a>
+        <a id="next-link" href="/kitchens/#projects">View Kitchen Projects</a>
       </div>
-      <small>Landing-page leads are counted from the completed form submission, not this thank-you page.</small>
+      <small>Need to add details or discuss timing? Give us a call and we will help with the next step.</small>
     </main>
     <script>
-      const serviceBackLinks = {
-        kitchens: "/kitchens/",
-        bathrooms: "/bathrooms/"
+      window.dataLayer = window.dataLayer || [];
+
+      const serviceNextLinks = {
+        kitchens: "/kitchens/#projects",
+        bathrooms: "/bathrooms/#projects"
       };
 
-      const serviceNames = {
-        kitchens: "Kitchen Remodeling",
-        bathrooms: "Bathroom Remodeling"
+      const serviceNextText = {
+        kitchens: "View Kitchen Projects",
+        bathrooms: "View Bathroom Projects"
       };
 
       const service = new URLSearchParams(window.location.search).get("service");
-      const backLink = document.querySelector("#back-link");
+      const nextLink = document.querySelector("#next-link");
 
-      if (backLink && serviceBackLinks[service]) {
-        backLink.href = serviceBackLinks[service];
-        backLink.textContent = `Back To ${serviceNames[service]}`;
+      if (nextLink && serviceNextLinks[service]) {
+        nextLink.href = serviceNextLinks[service];
+        nextLink.textContent = serviceNextText[service];
       }
+
+      document.querySelectorAll('a[href^="tel:"]').forEach((phoneLink) => {
+        phoneLink.addEventListener("click", () => {
+          window.dataLayer.push({
+            event: "phone_click",
+            page_location: window.location.href,
+            phone_number: phoneLink.getAttribute("href").replace("tel:", ""),
+            link_text: phoneLink.textContent.trim()
+          });
+        });
+      });
     </script>
   </body>
 </html>
