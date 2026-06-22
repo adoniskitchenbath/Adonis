@@ -84,7 +84,7 @@
               <a href="tel:3307345727">&#9742; (330) 734-5727</a>
               <span>&#9906; Hudson, OH</span>
             </div>
-            <form id="consultation" class="consult-card" name="kitchen-consultation" action="/kitchens/thank-you/" method="post" netlify data-netlify="true" data-netlify-honeypot="bot-field">
+            <form id="consultation" class="consult-card" name="kitchen-consultation" action="/thank-you/?service=kitchens" method="post" netlify data-netlify="true" data-netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="kitchen-consultation" />
               <input type="hidden" name="lead_source" value="landing.adoniskitchenbath.com" />
               <input type="hidden" name="landing_page" value="kitchens" />
@@ -300,7 +300,7 @@
               service: formData.get("service")
             });
 
-            window.location.href = "https://www.adoniskitchenbath.com/schedule-a-free-estimate-thank-you/";
+            window.location.href = "/thank-you/?service=kitchens";
           } catch (error) {
             pushAnalyticsEvent("form_submit_error", {
               form_name: formName
