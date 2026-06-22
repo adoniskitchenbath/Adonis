@@ -3,7 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adonis Kitchen & Bath</title>
+    <title>Kitchen Remodeling in Hudson, OH | Adonis Kitchen &amp; Bath</title>
+    <meta name="description" content="Book a free design consultation with Adonis Kitchen & Bath for custom kitchen remodeling in Hudson and Northeast Ohio." />
+    <link rel="canonical" href="https://landing.adoniskitchenbath.com/kitchens/" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kitchen Remodeling in Hudson, OH | Adonis Kitchen &amp; Bath" />
+    <meta property="og:description" content="Custom kitchen renovations for Northeast Ohio homeowners who want clear planning, quality craftsmanship, and a managed remodeling process." />
+    <meta property="og:url" content="https://landing.adoniskitchenbath.com/kitchens/" />
+    <meta property="og:image" content="https://landing.adoniskitchenbath.com/kitchens/assets/client/hero-yoder.jpg" />
+    <meta property="og:site_name" content="Adonis Kitchen &amp; Bath" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kitchen Remodeling in Hudson, OH | Adonis Kitchen &amp; Bath" />
+    <meta name="twitter:description" content="Book a free design consultation for a custom kitchen remodel in Hudson and Northeast Ohio." />
+    <meta name="twitter:image" content="https://landing.adoniskitchenbath.com/kitchens/assets/client/hero-yoder.jpg" />
     <!-- Google Tag Manager -->
     <script>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -200,15 +213,58 @@
       <a href="#consultation">Request Consultation</a>
     </nav>
     <script>
+      window.dataLayer = window.dataLayer || [];
+
+      const pushAnalyticsEvent = (eventName, eventParams = {}) => {
+        window.dataLayer.push({
+          event: eventName,
+          page_location: window.location.href,
+          ...eventParams
+        });
+      };
+
+      document.querySelectorAll('a[href^="tel:"]').forEach((phoneLink) => {
+        phoneLink.addEventListener("click", () => {
+          pushAnalyticsEvent("phone_click", {
+            phone_number: phoneLink.getAttribute("href").replace("tel:", ""),
+            link_text: phoneLink.textContent.trim()
+          });
+        });
+      });
+
+      document.querySelectorAll('a[href="#consultation"]').forEach((ctaLink) => {
+        ctaLink.addEventListener("click", () => {
+          pushAnalyticsEvent("consultation_cta_click", {
+            link_text: ctaLink.textContent.trim()
+          });
+        });
+      });
+
       const consultationForm = document.querySelector(".consult-card");
 
       if (consultationForm) {
+        consultationForm.addEventListener("focusin", () => {
+          if (consultationForm.dataset.analyticsStarted === "true") {
+            return;
+          }
+
+          consultationForm.dataset.analyticsStarted = "true";
+          pushAnalyticsEvent("form_start", {
+            form_name: consultationForm.getAttribute("name")
+          });
+        });
+
         consultationForm.addEventListener("submit", async (event) => {
           event.preventDefault();
 
           const submitButton = consultationForm.querySelector("button[type='submit']");
           const statusMessage = consultationForm.querySelector(".form-status");
           const formData = new FormData(consultationForm);
+          const formName = consultationForm.getAttribute("name");
+
+          pushAnalyticsEvent("form_submit_attempt", {
+            form_name: formName
+          });
 
           if (submitButton) {
             submitButton.disabled = true;
@@ -230,8 +286,26 @@
               throw new Error("Form submission failed");
             }
 
+            pushAnalyticsEvent("form_submit_success", {
+              form_name: formName
+            });
+
+            pushAnalyticsEvent("form_submit", {
+              form_name: formName
+            });
+
+            pushAnalyticsEvent("generate_lead", {
+              form_name: formName,
+              lead_source: formData.get("lead_source"),
+              service: formData.get("service")
+            });
+
             window.location.href = "https://www.adoniskitchenbath.com/schedule-a-free-estimate-thank-you/";
           } catch (error) {
+            pushAnalyticsEvent("form_submit_error", {
+              form_name: formName
+            });
+
             if (submitButton) {
               submitButton.disabled = false;
               submitButton.textContent = "Get My Free Consultation";
