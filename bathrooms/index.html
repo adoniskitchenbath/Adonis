@@ -88,6 +88,7 @@
               <input type="hidden" name="form-name" value="bathroom-consultation" />
               <input type="hidden" name="lead_source" value="landing.adoniskitchenbath.com" />
               <input type="hidden" name="landing_page" value="bathrooms" />
+              <input type="hidden" name="landing_url" value="" />
               <input type="hidden" name="service" value="bathroom remodeling" />
               <p class="hidden-field"><label>Do not fill this out if you are human: <input name="bot-field" /></label></p>
               <h2>Book Your Free<br />Design Consultation</h2>
@@ -241,6 +242,7 @@
       });
 
       const consultationForm = document.querySelector(".consult-card");
+      const landingUrl = window.location.href;
 
       if (consultationForm) {
         consultationForm.addEventListener("focusin", () => {
@@ -259,6 +261,12 @@
 
           const submitButton = consultationForm.querySelector("button[type='submit']");
           const statusMessage = consultationForm.querySelector(".form-status");
+          const landingUrlInput = consultationForm.querySelector('input[name="landing_url"]');
+
+          if (landingUrlInput) {
+            landingUrlInput.value = landingUrl;
+          }
+
           const formData = new FormData(consultationForm);
           const formName = consultationForm.getAttribute("name");
 
