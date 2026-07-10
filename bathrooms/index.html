@@ -302,12 +302,6 @@
               form_name: formName
             });
 
-            pushAnalyticsEvent("generate_lead", {
-              form_name: formName,
-              lead_source: formData.get("lead_source"),
-              service: formData.get("service")
-            });
-
             window.location.href = "/thank-you/?service=bathrooms";
           } catch (error) {
             pushAnalyticsEvent("form_submit_error", {
