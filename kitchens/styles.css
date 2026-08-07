@@ -123,11 +123,13 @@ a {
   line-height: 1.55;
 }
 
+/* Mobile/stacked hero only -- switched on at the 1060px breakpoint, where the
+   form drops below the copy and a jump link beats a static pointer. */
 .hero-cta {
+  display: none;
   width: auto;
   min-width: 246px;
   height: 52px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0 24px;
@@ -138,6 +140,51 @@ a {
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+.hero-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-button);
+  font-size: clamp(19px, 1.9vw, 23px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-cue-arrow {
+  flex: none;
+  width: clamp(84px, 8vw, 112px);
+  height: 26px;
+  color: var(--blue-bright);
+}
+
+.hero-cue-arrow path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-cue-arrow {
+    animation: hero-cue-nudge 1.9s ease-in-out infinite;
+  }
+
+  @keyframes hero-cue-nudge {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(12px);
+    }
+  }
 }
 
 .fit-note {
@@ -768,6 +815,16 @@ blockquote footer {
     max-width: 440px;
   }
 
+  /* Single-column hero: the form sits below the copy, so swap the static
+     pointer for the button that scrolls down to it. */
+  .hero-cue {
+    display: none;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+  }
+
   .projects-grid,
   .team-grid,
   .cta-grid {
@@ -1155,6 +1212,7 @@ b,
 .promise h3,
 .top-contact,
 .hero-cta,
+.hero-cue,
 .consult-card button,
 .trust-strip p,
 .steps h3,
