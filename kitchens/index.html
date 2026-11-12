@@ -26,6 +26,8 @@
       })(window,document,'script','dataLayer','GTM-W4WF6HCX');
     </script>
     <!-- End Google Tag Manager -->
+    <!-- Meta Pixel + advertising choices (loads the Pixel only when the visitor has not opted out) -->
+    <script src="/js/meta-tracking.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Work+Sans:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
@@ -99,6 +101,11 @@
               <input type="hidden" name="landing_page" value="kitchens" />
               <input type="hidden" name="landing_url" value="" />
               <input type="hidden" name="service" value="kitchen remodeling" />
+              <input type="hidden" name="meta_event_id" value="" />
+              <input type="hidden" name="meta_consent" value="" />
+              <input type="hidden" name="meta_fbp" value="" />
+              <input type="hidden" name="meta_fbc" value="" />
+              <input type="hidden" name="meta_ua" value="" />
               <p class="hidden-field"><label>Do not fill this out if you are human: <input name="bot-field" /></label></p>
               <h2>Book Your Free<br />Design Consultation</h2>
               <p>No pressure. No obligation. Just a clear conversation about your project, budget, and next steps.</p>
@@ -216,6 +223,7 @@
       <div class="container">
         <p>Adonis Kitchen &amp; Bath | Hudson, OH | <a href="tel:3307345727">(330) 734-5727</a></p>
         <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/privacy-policy/#advertising-choices" data-ad-choices>Advertising Choices</a>
       </div>
     </footer>
     <nav class="mobile-cta-bar" aria-label="Quick contact">
@@ -276,6 +284,14 @@
             landingUrlInput.value = landingUrl;
           }
 
+          // Meta tracking must never interfere with the enquiry itself.
+          let metaEventId = "";
+          try {
+            metaEventId = window.AKBMeta ? window.AKBMeta.prepareLead(consultationForm) : "";
+          } catch (trackingError) {
+            metaEventId = "";
+          }
+
           const formData = new FormData(consultationForm);
           const formName = consultationForm.getAttribute("name");
 
@@ -310,6 +326,14 @@
             pushAnalyticsEvent("form_submit", {
               form_name: formName
             });
+
+            try {
+              if (window.AKBMeta) {
+                window.AKBMeta.markLeadSucceeded(metaEventId);
+              }
+            } catch (trackingError) {
+              // Ignore tracking errors; the submission has already succeeded.
+            }
 
             window.location.href = "/thank-you/?service=kitchens";
           } catch (error) {

@@ -19,6 +19,21 @@
       })(window,document,'script','dataLayer','GTM-W4WF6HCX');
     </script>
     <!-- End Google Tag Manager -->
+    <!-- Meta Pixel: kitchens landing page only. Fires the browser Lead only after an accepted submission. -->
+    <script>
+      (function () {
+        if (new URLSearchParams(window.location.search).get("service") !== "kitchens") return;
+        var metaScript = document.createElement("script");
+        metaScript.src = "/js/meta-tracking.js";
+        metaScript.setAttribute("data-banner", "off");
+        metaScript.onload = function () {
+          try {
+            if (window.AKBMeta) window.AKBMeta.trackPendingLead();
+          } catch (error) {}
+        };
+        document.head.appendChild(metaScript);
+      })();
+    </script>
     <style>
       :root {
         color-scheme: light;

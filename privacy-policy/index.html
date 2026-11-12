@@ -92,6 +92,17 @@
         background: var(--soft);
       }
 
+      .ad-choices-button {
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--soft);
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
       .policy-footer {
         padding: 24px 0;
         border-top: 1px solid var(--line);
@@ -128,7 +139,12 @@
 
         <h2>Cookies</h2>
         <p>Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the website that you visit and are stored on your computer's hard drive.</p>
-        <p>Our website and landing pages may use cookies to collect information and improve our Service. We may also use analytics and advertising tools, including Google Tag Manager, Google Analytics, and Google Ads, to understand website activity and measure advertising performance. You have the option to either accept or refuse cookies, and know when a cookie is being sent to your computer. If you choose to refuse cookies, you may not be able to use some portions of our Service.</p>
+        <p>Our website and landing pages may use cookies to collect information and improve our Service. We may also use analytics and advertising tools, including Google Tag Manager, Google Analytics, Google Ads, and the Meta Pixel, to understand website activity and measure advertising performance. You have the option to either accept or refuse cookies, and know when a cookie is being sent to your computer. If you choose to refuse cookies, you may not be able to use some portions of our Service.</p>
+
+        <h2 id="advertising-choices">Advertising Measurement and Your Choices</h2>
+        <p>Our landing pages use the Meta Pixel and the Meta Conversions API to measure how our Facebook and Instagram advertising performs. When you visit a landing page, the Meta Pixel may record that the page was viewed and that a phone link was clicked. When you submit a consultation request, we may tell Meta that an enquiry was made and share your email address in hashed (encrypted, non-readable) form, together with your IP address, browser type, and Meta cookie identifiers, so Meta can match the enquiry to an ad you saw. We do not share your project details, budget, or message with Meta.</p>
+        <p>You can opt out of this advertising tracking at any time using the button below or the "Advertising Choices" link at the bottom of our landing pages. If your browser sends a Global Privacy Control (GPC) signal, we treat it as an opt-out automatically. Opting out does not affect your ability to request a consultation.</p>
+        <p><button type="button" class="ad-choices-button" data-ad-choices>Manage advertising choices</button></p>
 
         <h2>Service Providers</h2>
         <p>We may employ third-party companies and individuals due to the following reasons:</p>
@@ -163,5 +179,6 @@
         Adonis Kitchen &amp; Bath | Hudson, OH
       </div>
     </footer>
+    <script src="/js/meta-tracking.js" data-pixel="off" data-banner="off"></script>
   </body>
 </html>
